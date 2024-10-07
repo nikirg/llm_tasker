@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "llm-task"
+name = "llm_tasker"
 version = "0.1.0"
 description = "A lightweight Python library for creating tasks and workflows with Large Language Models (LLMs) using prompt templates."
 authors = ["Nikita Irgashev <nik.irg@yandex.ru>"]

@@ -4,7 +4,7 @@ from typing import ClassVar, Literal
 from pydantic import BaseModel
 from openai import AsyncOpenAI
 
-from llm_task.parser import parse_json
+from llm_tasker.parser import parse_json
 
 
 @dataclass

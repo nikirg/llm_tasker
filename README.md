@@ -1,6 +1,6 @@
 # LLM Task
 
-**LLM Task** is a small Python library designed to simplify working with language models and prompts. It provides a structure for defining tasks, configuring LLM clients, and managing responses in a type-safe manner. 
+**LLM Tasker** is a small Python library designed to simplify working with language models and prompts. It provides a structure for defining tasks, configuring LLM clients, and managing responses in a type-safe manner. 
 
 ## Features
 
@@ -21,7 +21,7 @@ pip install llm_task
 ```python
 from openai import AsyncOpenAI
 from pydantic import BaseModel
-from llm_task.task import LLMTask, TaskConfig
+from llm_tasker.task import LLMTask, TaskConfig
 
 LLM_API_KEY = "your-openai-api-key"
 LLM_MODEL_ID = "gpt-4o
