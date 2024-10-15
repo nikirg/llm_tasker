@@ -1,4 +1,4 @@
-# LLM Task
+# LLM Tasker
 
 **LLM Tasker** is a small Python library designed to simplify working with language models and prompts. It provides a structure for defining tasks, configuring LLM clients, and managing responses in a type-safe manner. 
 
@@ -14,7 +14,7 @@
 ## Installation
 
 ```bash
-pip install llm_task
+pip install llm_tasker
 ```
 
 ## Example Usage
