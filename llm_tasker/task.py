@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import ClassVar, Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from openai import AsyncOpenAI
 
 from llm_tasker.parser import parse_json
@@ -17,7 +17,10 @@ class TaskConfig:
 class LLMTask(BaseModel):
     config: ClassVar[TaskConfig]
     result: str | None = None
-    raw_result: str | None = None
+    
+    model_config = ConfigDict(
+        validate_assignment=True,
+    )
 
     @property
     def status(self) -> Literal["pending", "in_progress", "completed", "error"]:
@@ -51,8 +54,6 @@ class LLMTask(BaseModel):
         if not model:
             pass
 
-        result_model, *_ = self.model_fields["result"].annotation.__args__
-        is_json = issubclass(result_model, BaseModel)
         messages = [{"role": "system", "content": str(self)}]
 
         for _ in range(n_turns):
@@ -60,19 +61,15 @@ class LLMTask(BaseModel):
                 messages=messages, model=model, timeout=10_000
             )
             result = result.choices[0].message.content
-                        
-            self.raw_result = result
+            if result := parse_json(result):
+                try:
+                    self.result = result
+                except (TypeError, AssertionError, ValueError):
+                    continue
+                     
+            self.result = result
+            break
+                
 
-            if is_json:
-                if result := parse_json(result):
-                    try:
-                        self.result = result_model(**result)
-                    except (ValueError, AssertionError):
-                        pass
-                    else:
-                        if log:
-                            print(self.raw_result)
-                        break
-            else:
-                self.result = result
-                break
+
+
